@@ -12,35 +12,29 @@
 */
 
 Route::get('/', function () {
-	
-	//LISTAR CUSTOMERS
-	//$customers = Charlie\Customer::paginate(10);
-	//dumping and die -> solta as informações do array na tela e mata o código
-	//dd($customers->toArray());
-	//echo $customers->render();
-	
-	
-	//CRIAR NOVO CUSTOMER
-	/*
-	$customer = new Charlie\Customer();
-	$customer->name = 'Eric Freitas';
-	$customer->city = 'Votuporanga';
-	$customer->state = 'SP';
-	$customer->birthdate = '1984-12-06 00:00:00';
-	$customer->special_customer = true;
-	$customer->save();
-	dd($customer->toArray()); 
-	*/
-	
-	
-	//ATUALIZAR
-	$data = [
-		'name' => 'um outro cara',
-		'birthdate' => '1989-01-01 00:00:00',
-	];
-	//trazer customer id 2
-	$customer = Charlie\Customer::find(2);
-	//$customer->name = "um outro cara";
-	//$customer->save();
-	$customer->update($data);
+	return("Olá mundo!");
 });
+
+//agrupamento criando a controller com a flag --resource
+Route::group(['prefix' => 'admin'], function(){
+	Route::resource('clientes', 'CustomersController');
+});
+
+
+//SEGUE PLANEJAMENTO DAS ROTAS QUE IREI USAR (EX)
+// /admin/clientes GET
+// /admin/clientes/1 GET
+// /admin/cliente POST << Criar novo
+// /admin/cliente/1 PUT << Atualizar existente
+// /admin/cliente/1 DELETE << deletar existente
+
+//JEITO ESPARTANO
+/*
+Route::group(['prefix' => 'admin'], function(){
+	Route::get('clientes', ['as' => 'customer.index', 'uses' => 'CustomersController@index']);
+	Route::get('cliente/{id}', ['as' => 'customer.get', 'uses' => 'CustomersController@get']);
+	Route::post('cliente', ['as' => 'customer.create', 'uses' => 'CustomersController@create']);
+	Route::put('cliente/{id}', ['as' => 'customer.update', 'uses' => 'CustomersController@update']);
+	Route::delete('cliente{id}', ['as' => 'customer.delete', 'uses' => 'CustomersController@delete']);
+});
+*/
